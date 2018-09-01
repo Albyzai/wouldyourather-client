@@ -14,9 +14,18 @@
   "author": "Jonas Mohr Pedersen",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "concurrently": "^3.6.1",
     "express": "^4.16.3",
-    "mongoose": "^5.2.9"
+    "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.9",
+    "mongoose-slug-generator": "^1.0.4",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "validator": "^10.7.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"

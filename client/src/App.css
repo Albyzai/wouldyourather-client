@@ -2,20 +2,412 @@
   margin-right: 0.5rem;
 }
 
-.fade-enter{
+.fade-enter {
   opacity: 0.01;
 }
 
-.fade-enter-active{
+.fade-enter-active {
   opacity: 1;
   transition: opacity 1000ms ease-in;
 }
 
-.fade-exit{
+.fade-exit {
   opacity: 1;
 }
 
-.fade-exit-active{
+.fade-exit-active {
   opacity: 0.01;
   transition: opacity 100ms ease-in;
+}
+
+/*---------------
+    #General
+---------------*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  /* background: url("../img/bgpattern.png") repeat; */
+  font-family: "Roboto", sans-serif !important;
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+/Edge */
+  user-select: none;
+  /* Standard */
+}
+
+.nopadding {
+  padding: 0 !important;
+}
+
+.nomargin {
+  margin: 0 !important;
+}
+
+#buttonrow {
+  margin-bottom: 2rem;
+}
+
+/*---------------
+  #Scrollbar
+---------------*/
+
+.answer-peek {
+  position: fixed;
+  display: none;
+  width: 100%;
+  top: 0 !important;
+  z-index: 10;
+  height: 6rem;
+  background: black;
+}
+
+.peek-text {
+  width: 100%;
+  height: 3rem;
+  background-color: #222;
+  color: white;
+  text-align: center;
+  line-height: 3rem;
+}
+
+.peek-buttons {
+  position: relative;
+  width: 100%;
+  height: 3rem;
+}
+
+.peek-bluebutton {
+  width: 50%;
+  height: 100%;
+  display: block;
+  float: left;
+  text-align: center;
+  color: white;
+  line-height: 3rem;
+  text-shadow: 1px 1px #262626;
+  background-color: #48b0df;
+  background-image: -webkit-linear-gradient(to top, #a1e1f0, #48b0df);
+  background-image: -moz-linear-gradient(to top, #a1e1f0, #48b0df);
+  background-image: -ms-linear-gradient(to top, #a1e1f0, #48b0df);
+  background-image: -o-linear-gradient(to top, #a1e1f0, #48b0df);
+  background-image: linear-gradient(to top, #a1e1f0, #48b0df);
+}
+
+.peek-bluebutton:after {
+  color: white;
+  text-align: center;
+  line-height: 2.8rem;
+  font-size: 1.4rem;
+  content: "eller";
+  right: 50%;
+  margin-right: -2rem;
+  position: absolute;
+  width: 4rem;
+  height: 3rem;
+  background: black;
+  z-index: 2;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+}
+
+.peek-redbutton {
+  width: 50%;
+  height: 100%;
+  display: block;
+  float: left;
+  text-align: center;
+  color: white;
+  line-height: 3rem;
+  text-shadow: 1px 1px #262626;
+  background-color: #d0252b;
+  background-image: -webkit-linear-gradient(to top, #eb353e, #d0252b);
+  background-image: -moz-linear-gradient(to top, #eb353e, #d0252b);
+  background-image: -ms-linear-gradient(to top, #eb353e, #d0252b);
+  background-image: -o-linear-gradient(to top, #eb353e, #d0252b);
+  background-image: linear-gradient(to top, #eb353e, #d0252b);
+}
+
+/*---------------
+  #Delete List
+---------------*/
+
+.dilemmalist-entry {
+  border-bottom: 2px #fff solid;
+  padding: 20px;
+}
+
+.dilemmalist-entry h4 {
+  color: white;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.id-container {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 50px;
+  height: 50px;
+  background: white;
+  color: black;
+
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  margin-bottom: 25px;
+}
+
+.slug-container {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 50px;
+  height: 50px;
+  background: white;
+  color: black;
+
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+}
+
+.dilemmalist-entry .total-votes {
+  color: white !important;
+  font-size: 2rem;
+}
+
+.dilemmalist-entry .question-text {
+  font-size: 3rem;
+}
+
+.dilemmalist-entry #bluebutton,
+.dilemmalist-entry #redbutton {
+  height: 15rem;
+}
+
+#bluebutton:after {
+  color: white;
+  text-align: center;
+  line-height: 6rem;
+  font-size: 2rem;
+  content: "eller";
+  position: absolute;
+  top: 50%;
+  margin-top: -3rem;
+  right: -4.5rem;
+  width: 9rem;
+  height: 6rem;
+  background: black;
+  z-index: 2;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  box-shadow: 0px 0px 15px 0px black;
+}
+
+.dilemmalist-entry #text-container td {
+  width: 2000px;
+  height: 15rem;
+}
+
+.dilemmalist .result {
+  display: visible;
+}
+
+/*---------------
+  #Dilemma Buttons
+---------------*/
+
+.percentage {
+  font-style: bold;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  font-size: 4rem;
+  color: black;
+}
+
+.dilemma-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  height: 18rem;
+}
+
+.question-result {
+  font-size: 1.75rem;
+}
+
+.question {
+  font-size: 3rem;
+  text-align: center;
+  width: 80%;
+}
+
+.button-form {
+  padding: 0;
+}
+
+#text-container p {
+  text-shadow: 1px 1px #262626;
+}
+
+.total-votes {
+  font-size: 1.75rem;
+}
+
+#bluebutton {
+  margin-right: 5px;
+  background-color: #48b0df;
+  background-image: -webkit-linear-gradient(to top, #a1e1f0, #48b0df);
+  background-image: -moz-linear-gradient(to top, #a1e1f0, #48b0df);
+  background-image: -ms-linear-gradient(to top, #a1e1f0, #48b0df);
+  background-image: -o-linear-gradient(to top, #a1e1f0, #48b0df);
+  background-image: linear-gradient(to top, #a1e1f0, #48b0df);
+}
+
+#bluebutton:hover {
+  background-image: -webkit-linear-gradient(to top, #bbecf8, #a1e1f0);
+  background-image: -moz-linear-gradient(to top, #bbecf8, #a1e1f0);
+  background-image: -ms-linear-gradient(to top, #bbecf8, #a1e1f0);
+  background-image: -o-linear-gradient(to top, #bbecf8, #a1e1f0);
+  background-image: linear-gradient(to top, #bbecf8, #a1e1f0);
+}
+
+.blueCheckDiv {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: url("/bluecheck.png");
+  width: 59px;
+  height: 59px;
+}
+
+#bluebutton .total-votes {
+  color: #beecff;
+}
+
+#bluebutton .percentage {
+  color: #267ea0;
+}
+
+#redbutton {
+  margin-left: 5px;
+  background-color: #d0252b;
+  background-image: -webkit-linear-gradient(to top, #eb353e, #d0252b);
+  background-image: -moz-linear-gradient(to top, #eb353e, #d0252b);
+  background-image: -ms-linear-gradient(to top, #eb353e, #d0252b);
+  background-image: -o-linear-gradient(to top, #eb353e, #d0252b);
+  background-image: linear-gradient(to top, #eb353e, #d0252b);
+}
+
+#redbutton:hover {
+  background-image: -webkit-linear-gradient(to top, #f6464f, #eb353e);
+  background-image: -moz-linear-gradient(to top, #f6464f, #eb353e);
+  background-image: -ms-linear-gradient(to top, #f6464f, #eb353e);
+  background-image: -o-linear-gradient(to top, #f6464f, #eb353e);
+  background-image: linear-gradient(to top, #f6464f, #eb353e);
+}
+
+.redCheckDiv {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: url("/redcheck.png");
+  width: 59px;
+  height: 59px;
+}
+
+#redbutton .total-votes {
+  color: #ff7f7f;
+}
+
+#redbutton .percentage {
+  color: #7e0b0b;
+}
+
+/*---------------
+  #Divider
+---------------*/
+
+#divider-left {
+  height: 3rem;
+  background: #f5f5f5;
+  border-bottom: 1px #3c3c3c solid;
+  border-right: 1px #ccc solid;
+}
+
+#divider-right {
+  height: 3rem;
+  background: #f5f5f5;
+  border-bottom: 1px #3c3c3c solid;
+}
+
+.social {
+  height: 5rem;
+  background-color: white;
+}
+
+#col-left {
+  background: #f5f5f5;
+}
+
+/*---------------
+  #Prev-next buttons
+---------------*/
+
+.col-md-1 {
+  height: 25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fa-angle-left {
+  float: right;
+}
+
+.fa-angle-right {
+  float: left;
+}
+
+.fa-angle-right,
+.fa-angle-left {
+  color: white;
+  font-size: 6rem !important;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.fa-angle-right:hover,
+.fa-angle-left:hover {
+  -webkit-transform: scale(1.3);
+  -ms-transform: scale(1.3);
+  transform: scale(1.3);
+}
+
+/* Nested comments */
+
+ul,
+li {
+  list-style: none;
+}
+
+ul.nested li {
+  margin-left: 50px;
+  transform: scale(0.95);
 }
