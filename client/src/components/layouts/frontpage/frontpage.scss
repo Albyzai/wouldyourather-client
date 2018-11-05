@@ -1,0 +1,31 @@
+#front-page-wrapper {
+  display: grid;
+  grid-template-columns: (6, 1fr);
+  grid-gap: 2em;
+
+  grid-template-areas:
+    'header'
+    'dilemma'
+    'comments comments comments comments sidebar sidebar'
+    'footer';
+
+  header {
+    grid-area: header;
+  }
+
+  .dilemma {
+    grid-area: dilemma;
+  }
+
+  .comments {
+    grid-area: comments;
+  }
+
+  aside {
+    grid-area: sidebar;
+  }
+
+  footer {
+    grid-area: footer;
+  }
+}

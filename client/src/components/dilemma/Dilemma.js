@@ -1,34 +1,82 @@
-import React, { Component } from "react";
-import propTypes from "prop-types";
-import CountUp from "react-countup";
-import { addVote } from "../../actions/dilemmaActions";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import propTypes from 'prop-types';
+import CountUp from 'react-countup';
+import { connect } from 'react-redux';
+import Divider from './Divider';
+
+import { addVote } from '../../actions/dilemmaActions';
+import { getDilemma } from '../../actions/dilemmaActions';
 
 class Dilemma extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dilemmaClicked: false,
-      clickedDilemma: ""
+      isAnswered: false,
+      clickedDilemma: ''
     };
+
+    this.onVoteClick = this.onVoteClick.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getDilemma();
+
+    //  Check if dilemmas has already been answered
+    const dilemma = this.props.dilemmas.dilemma;
+    console.log(JSON.stringify(this.props.auth.user));
+    if (
+      (dilemma.red_votes.includes(this.props.auth.user.id) ||
+        dilemma.blue_votes.includes(this.props.auth.user.id)) &&
+      !this.state.isAnswered
+    ) {
+      console.log('is answered');
+      this.setState({ isAnswered: true });
+    } else {
+      console.log('is not answered');
+    }
   }
 
   calculatePercent = (number1, number2) => {
     return (number1 / (number1 + number2)) * 100;
   };
 
-  onVoteClick = (id, color) => {
-    if (id && color && this.state.dilemmaClicked === false) {
+  onLikeClick = (id) => {
+    this.props.addLike(id);
+  };
+
+  onVoteClick = (e, id) => {
+    console.log('id: ' + id);
+    //  Only works if dilemma isn't already answered
+    if (!this.state.isAnswered) {
+      //  Get the clicked dilemma and its color attribute
+      const target = e.currentTarget;
+      const color = target.dataset.color;
+
+      //  Adds a vote to the identified dilemma
       this.props.addVote(id, color);
-      this.setState({ dilemmaClicked: true, clickedDilemma: color });
+
+      if (this.props.auth.isAuthenticated) {
+        console.log('Is authenticated');
+      }
+
+      //  Sets the component state, so that it may not be pressed again
+      this.setState({ isAnswered: true, clickedDilemma: color });
     }
   };
 
   render() {
-    const { id, prefix, red, blue, redvotes, bluevotes } = this.props;
+    const { dilemma } = this.props.dilemmas;
+    const { _id, prefix, red, blue, red_votes, blue_votes } = dilemma;
+    const isAnswered = this.state.isAnswered;
 
-    const redPercent = this.calculatePercent(redvotes, bluevotes);
-    const bluePercent = this.calculatePercent(bluevotes, redvotes);
+    const redPercent = this.calculatePercent(
+      red_votes.length,
+      blue_votes.length
+    );
+    const bluePercent = this.calculatePercent(
+      blue_votes.length,
+      red_votes.length
+    );
 
     const blueResult = (
       <div className="result">
@@ -36,7 +84,7 @@ class Dilemma extends Component {
           <CountUp end={bluePercent} duration={2.5} suffix="%" />
         </div>
         <div className="total-votes">
-          <span className="count">{bluevotes}</span>
+          <span className="count">{blue_votes.length}</span>
           <span className="word" />
         </div>
         <div className="question-result">{blue}</div>
@@ -49,17 +97,57 @@ class Dilemma extends Component {
           <CountUp end={redPercent} duration={2.5} suffix="%" />
         </div>
         <div className="total-votes">
-          <span className="count">{redvotes}</span>
+          <span className="count">{red_votes.length}</span>
         </div>
         <div className="question-result">{red}</div>
       </div>
     );
 
-    const redCheck = <div className="redCheckDiv" />;
-    const blueCheck = <div className="blueCheckDiv" />;
-
     return (
-      <div className="container">
+      <React.Fragment>
+        <section className="dilemma-section">
+          <div className="arrow-left">Back</div>
+          <div className="dilemma-title">
+            <h4>
+              {prefix} {dilemma.title}
+            </h4>
+          </div>
+
+          <div
+            id="red-dilemma-button"
+            className="dilemma-button"
+            data-color="red"
+            onClick={(e) => this.onVoteClick(e, _id)}
+          >
+            {isAnswered ? (
+              redResult
+            ) : (
+              <span className="question">{dilemma.red}</span>
+            )}
+          </div>
+          <div
+            id="blue-dilemma-button"
+            className="dilemma-button"
+            data-color="blue"
+            onClick={(e) => this.onVoteClick(e, _id)}
+          >
+            {isAnswered ? (
+              blueResult
+            ) : (
+              <span className="question">{dilemma.blue}</span>
+            )}
+          </div>
+
+          <div className="arrow-right">Next</div>
+        </section>
+        <Divider
+          title={dilemma.title}
+          user={dilemma.user}
+          onClick={this.onLikeClick.bind(this, this.state.id)}
+        />
+      </React.Fragment>
+
+      /*<div className="container">
         <div className="row" id="textrow">
           <div className="col-md-12 text-center">
             {prefix ? (
@@ -75,9 +163,9 @@ class Dilemma extends Component {
             id="bluebutton"
             onClick={() => this.onVoteClick(id, "blue")}
           >
-            {/* Result goes here */}
+            
             {this.state.clickedDilemma === "blue" ? blueCheck : null}
-            {this.state.dilemmaClicked ? (
+            {this.state.isAnswered ? (
               blueResult
             ) : (
               <p className="question">{blue}</p>
@@ -89,21 +177,22 @@ class Dilemma extends Component {
             id="redbutton"
             onClick={() => this.onVoteClick(id, "red")}
           >
-            {/* Result goes here  */}
+            
             {this.state.clickedDilemma === "red" ? redCheck : null}
-            {this.state.dilemmaClicked ? (
+            {this.state.isAnswered ? (
               (redCheck, redResult)
             ) : (
               <p className="question">{red}</p>
             )}
           </div>
         </div>
-      </div>
+      </div> */
     );
   }
 }
 
 Dilemma.propTypes = {
+  getDilemma: propTypes.func.isRequired,
   prefix: propTypes.string,
   red: propTypes.string,
   blue: propTypes.string,
@@ -111,12 +200,13 @@ Dilemma.propTypes = {
   blue_votes: propTypes.number
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
+  auth: state.auth,
   dilemmas: state.dilemmas,
   errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { addVote }
+  { getDilemma, addVote }
 )(Dilemma);

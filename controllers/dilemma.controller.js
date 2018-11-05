@@ -1,5 +1,6 @@
 // Import Models
 const Dilemma = require('../models/Dilemma');
+const User = require('../models/User');
 
 // Import Validation
 const validateDilemmaInput = require('../validation/dilemma');
@@ -40,7 +41,10 @@ module.exports.get_dilemmas = (req, res) => {
 // @route   GET api/dilemmas/:slug
 module.exports.get_dilemma = (req, res) => {
   Dilemma.findOne({ slug: req.params.slug })
-    .populate('user', ['username'])
+    .populate({
+      path: ''
+    })
+
     .then((dilemma) => {
       if (!dilemma) {
         res.status(404).json({ err: 'This post does not exist' });
@@ -52,23 +56,32 @@ module.exports.get_dilemma = (req, res) => {
 
 // @route   GET api/dilemmas
 module.exports.get_dilemma_random = (req, res) => {
-  Dilemma.count().exec((err, count) => {
-    const random = Math.floor(Math.random() * count);
+  var cookie = req.cookies.visited;
+  if (cookie === undefined) {
+    Dilemma.count().exec((err, count) => {
+      const random = Math.floor(Math.random() * count);
 
-    Dilemma.findOne()
-      .skip(random)
-      .populate('user')
-      .populate('comments.comment')
-      .exec()
-      .then((dilemma) => {
-        if (!dilemma) {
-          res.status(404).json({ err: 'Could not find dilemma' });
-        }
-        res.json(dilemma);
-      })
-      .catch((err) => res.status(400).json({ err: 'An error occured' }));
-  });
+      Dilemma.findOne()
+        .skip(random)
+        .populate('user')
+        .populate('comments.comment')
+        .exec()
+        .then((dilemma) => {
+          if (!dilemma) {
+            res.status(404).json({ err: 'Could not find dilemma' });
+          }
+          res.cookie('visited');
+          res.json(dilemma);
+        })
+        .catch((err) => res.status(400).json({ err: 'An error occured' }));
+    });
+  } else {
+  }
 };
+
+module.exports.get_next_dilemma = (req, res) => {};
+
+module.exports.get_previous_dilemma = (req, res) => {};
 
 // @route   DELETE api/dilemmas/:id
 module.exports.delete_dilemma = (req, res) => {
@@ -91,6 +104,90 @@ module.exports.delete_dilemma = (req, res) => {
 
 // @route   POST api/dilemmas/:color/:id
 module.exports.vote_dilemma = (req, res) => {
+  const color = req.params.color;
+  const userId = req.user.id;
+  const dilemmaId = req.params.id;
+
+  console.log(
+    'color: ' +
+      color +
+      '\n' +
+      'user ID: ' +
+      userId +
+      '\n' +
+      'dilemma ID: ' +
+      dilemmaId
+  );
+
+  User.findById({ _id: userId })
+    .exec()
+    .then((user) => {
+      //  Check if user is found
+      if (user) {
+        console.log('User is found: ' + user.username);
+        Dilemma.findById({ _id: dilemmaId })
+          .populate('user')
+          .then((dilemma) => {
+            //console.log('inside dilemma: ' + dilemma);
+            console.log('Dilemma is found: ' + dilemma.red);
+
+            if (
+              !dilemma.red_votes.includes(user) &&
+              !dilemma.blue_votes.includes(user)
+            ) {
+              if (color === 'red') {
+                dilemma.red_votes.push(user);
+              } else if (color === 'blue') {
+                dilemma.blue_votes.push(user);
+              }
+
+              console.log('user in dilemma: ' + dilemma.red_votes[0]);
+              dilemma.save();
+              console.log('No error occurred so far');
+              return res.status(200).json(dilemma);
+            }
+          })
+          .catch((err) => {
+            return res.status(400).json({ error: err });
+          });
+      } else {
+        console.log('User is not found');
+        return res
+          .status(400)
+          .json({ message: 'No valid entry found for user' });
+      }
+    })
+    .catch((err) => {
+      return res.status(500).json({ error: err });
+    });
+};
+
+// @route   POST api/dilemmas/:color/:id
+
+/*module.exports.vote_dilemma = (req, res) => {
+  
+  if (req.params.color === 'red') {
+    Dilemma.findByIdAndUpdate(
+      { _id: req.params.id },
+      { $inc: { red_votes: 1 } }
+    ).then((dilemma) => {
+      return res.json(dilemma);
+    });
+  } else if (req.params.color === 'blue') {
+    Dilemma.findByIdAndUpdate(
+      { _id: req.params.id },
+      { $inc: { blue_votes: 1 } }
+    )
+      .populate('user')
+      .then((dilemma) => {
+        return res.json(dilemma);
+      });
+  } else {
+    res.status(404).json({ err: 'fuck you' });
+  }
+}; */
+
+module.exports.vote_dilemma_authenticated = (req, res) => {
   if (req.params.color === 'red') {
     Dilemma.findByIdAndUpdate(
       { _id: req.params.id },

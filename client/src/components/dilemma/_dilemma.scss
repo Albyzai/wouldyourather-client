@@ -1,0 +1,177 @@
+.dilemma-section {
+  display: grid;
+  grid-template-areas:
+    'title title title title'
+    'arrow-left red-dilemma blue-dilemma arrow-right'
+    'divider divider divider divider';
+  grid-template-columns: 1fr 3fr 3fr 1fr;
+  padding: 2em;
+
+  .dilemma-title {
+    grid-area: title;
+    text-align: center;
+    padding-bottom: 2em;
+  }
+
+  #red-dilemma-button {
+    grid-area: red-dilemma;
+    background: red;
+
+    .percentage {
+      color: #7e0b0b;
+    }
+  }
+
+  #blue-dilemma-button {
+    grid-area: blue-dilemma;
+    background: blue;
+
+    .percentage {
+      color: #267ea0;
+    }
+  }
+
+  .dilemma-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20em;
+
+    .question {
+      font-size: 3rem;
+      color: #fff;
+    }
+
+    .question-result {
+      font-size: 1.75rem;
+    }
+
+    .total-votes {
+      font-size: 1.75rem;
+    }
+  }
+
+  .arrow-left {
+    grid-area: arrow-left;
+  }
+
+  .arrow-right {
+    grid-area: arrow-right;
+  }
+}
+#divider {
+  grid-area: divider;
+  height: 50px;
+  background: #ccc;
+}
+
+/*
+.percentage {
+  font-style: bold;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  font-size: 4rem;
+  color: black;
+}
+
+.dilemma-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  height: 18rem;
+}
+
+.question-result {
+  font-size: 1.75rem;
+}
+
+.question {
+  font-size: 3rem;
+  text-align: center;
+  width: 80%;
+}
+
+.button-form {
+  padding: 0;
+}
+
+#text-container p {
+  text-shadow: 1px 1px #262626;
+}
+
+.total-votes {
+  font-size: 1.75rem;
+}
+
+#bluebutton {
+  margin-right: 5px;
+  background-color: #48b0df;
+  background-image: -webkit-linear-gradient(to top, #a1e1f0, #48b0df);
+  background-image: -moz-linear-gradient(to top, #a1e1f0, #48b0df);
+  background-image: -ms-linear-gradient(to top, #a1e1f0, #48b0df);
+  background-image: -o-linear-gradient(to top, #a1e1f0, #48b0df);
+  background-image: linear-gradient(to top, #a1e1f0, #48b0df);
+}
+
+#bluebutton:hover {
+  background-image: -webkit-linear-gradient(to top, #bbecf8, #a1e1f0);
+  background-image: -moz-linear-gradient(to top, #bbecf8, #a1e1f0);
+  background-image: -ms-linear-gradient(to top, #bbecf8, #a1e1f0);
+  background-image: -o-linear-gradient(to top, #bbecf8, #a1e1f0);
+  background-image: linear-gradient(to top, #bbecf8, #a1e1f0);
+}
+
+.blueCheckDiv {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: url('/bluecheck.png');
+  width: 59px;
+  height: 59px;
+}
+
+#bluebutton .total-votes {
+  color: #beecff;
+}
+
+#bluebutton .percentage {
+  color: #267ea0;
+}
+
+#redbutton {
+  margin-left: 5px;
+  background-color: #d0252b;
+  background-image: -webkit-linear-gradient(to top, #eb353e, #d0252b);
+  background-image: -moz-linear-gradient(to top, #eb353e, #d0252b);
+  background-image: -ms-linear-gradient(to top, #eb353e, #d0252b);
+  background-image: -o-linear-gradient(to top, #eb353e, #d0252b);
+  background-image: linear-gradient(to top, #eb353e, #d0252b);
+}
+
+#redbutton:hover {
+  background-image: -webkit-linear-gradient(to top, #f6464f, #eb353e);
+  background-image: -moz-linear-gradient(to top, #f6464f, #eb353e);
+  background-image: -ms-linear-gradient(to top, #f6464f, #eb353e);
+  background-image: -o-linear-gradient(to top, #f6464f, #eb353e);
+  background-image: linear-gradient(to top, #f6464f, #eb353e);
+}
+
+.redCheckDiv {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: url('/redcheck.png');
+  width: 59px;
+  height: 59px;
+}
+
+#redbutton .total-votes {
+  color: #ff7f7f;
+}
+
+#redbutton .percentage {
+  color: #7e0b0b;
+}
+*/

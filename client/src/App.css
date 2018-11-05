@@ -36,7 +36,7 @@ html {
 
 body {
   /* background: url("../img/bgpattern.png") repeat; */
-  font-family: "Roboto", sans-serif !important;
+  font-family: 'Roboto', sans-serif !important;
   -webkit-user-select: none;
   /* Safari */
   -moz-user-select: none;
@@ -110,7 +110,7 @@ body {
   text-align: center;
   line-height: 2.8rem;
   font-size: 1.4rem;
-  content: "eller";
+  content: 'eller';
   right: 50%;
   margin-right: -2rem;
   position: absolute;
@@ -203,7 +203,7 @@ body {
   text-align: center;
   line-height: 6rem;
   font-size: 2rem;
-  content: "eller";
+  content: 'eller';
   position: absolute;
   top: 50%;
   margin-top: -3rem;
@@ -292,7 +292,7 @@ body {
   position: absolute;
   right: 0;
   top: 0;
-  background: url("/bluecheck.png");
+  background: url('/bluecheck.png');
   width: 59px;
   height: 59px;
 }
@@ -327,7 +327,7 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  background: url("/redcheck.png");
+  background: url('/redcheck.png');
   width: 59px;
   height: 59px;
 }

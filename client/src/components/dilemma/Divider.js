@@ -1,16 +1,24 @@
-import React from "react";
-import propTypes from "prop-types";
+import React from 'react';
+import propTypes from 'prop-types';
 
 //The divider bar between Dilemma and comments section
-const Divider = ({ title, user, likes }) => {
+const Divider = ({ title, user }) => {
   return (
-    <div className="row">
+    <div id="divider" className="container-fluid">
+      {title &&
+        user && (
+          <span>
+            {title} af <span style={{ color: 'blue' }}>{user.username}</span>
+          </span>
+        )}
+    </div>
+
+    /*<div id="divider">
       <div className="col-md-8" id="divider-left">
-        {/* Renders the title and creator of dilemma */}
         {title &&
           user && (
             <h4>
-              {title} af <span style={{ color: "blue" }}>{user.username}</span>
+              {title} af <span style={{ color: 'blue' }}>{user.username}</span>
             </h4>
           )}
       </div>
@@ -20,14 +28,13 @@ const Divider = ({ title, user, likes }) => {
           <span className="badge badge-light">{likes.length}</span>
         </button>
       </div>
-    </div>
+    </div> */
   );
 };
 
 Divider.propTypes = {
   title: propTypes.string,
-  user: propTypes.object.isRequired,
-  likes: propTypes.array.isRequired
+  user: propTypes.object.isRequired
 };
 
 export default Divider;

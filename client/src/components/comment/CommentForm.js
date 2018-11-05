@@ -1,61 +1,52 @@
-import React, { Component } from "react";
-import { addComment, addReply } from "../../actions/dilemmaActions";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { addComment } from '../../actions/commentActions';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class CommentForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comment: ""
+      comment: ''
     };
   }
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
     const commentData = {
-      text: this.state.comment
+      text: this.state.comment,
+      dilemmaId: this.props.dilemmaId,
+      parentId: this.props.parentId
     };
 
-    console.log(JSON.stringify("parentID: " + this.props.parentId));
-    console.log(JSON.stringify("DilemmaID : " + this.props.dilemmaId));
-
-    console.log("Adding reply");
-    this.props.addReply(this.props.dilemmaId, this.props.parentId, commentData);
-
-    // console.log("adding comment");
-    // this.props.addComment(this.props.dilemmaId, commentData);
-
-    this.props.parentId
-      ? this.props.addReply(
-          this.props.dilemmaId,
-          this.props.parentId,
-          commentData
-        )
-      : this.props.addComment(this.props.dilemmaId, commentData);
+    this.props.addComment(commentData);
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <textarea
-              className="form-control"
-              name="comment"
-              rows="5"
-              id="comment"
-              placeholder="Skriv kommentar"
-              onChange={this.onChange}
-            />
-            <input type="submit" className="btn btn-info btn-block mt-4" />
-          </div>
-        </form>
-      </div>
+      <React.Fragment>
+        {this.props.auth.isAuthenticated ? (
+          <form onSubmit={this.onSubmit}>
+            <div className="form-group">
+              <textarea
+                className="form-control"
+                name="comment"
+                rows="5"
+                id="comment"
+                placeholder="Skriv kommentar"
+                onChange={this.onChange}
+              />
+              <input type="submit" className="btn btn-info btn-block mt-4" />
+            </div>
+          </form>
+        ) : (
+          <div />
+        )}
+      </React.Fragment>
     );
   }
 }
@@ -65,12 +56,13 @@ CommentForm.propTypes = {
   dilemmaId: PropTypes.string.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
+  auth: state.auth,
   dilemmas: state.dilemmas,
   errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { addComment, addReply }
+  { addComment }
 )(CommentForm);

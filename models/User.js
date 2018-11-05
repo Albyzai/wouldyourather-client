@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Create Schema
@@ -9,7 +9,7 @@ const UserSchema = new Schema({
   },
   avatar: {
     type: String,
-    default: "/default-avatar.jpg"
+    default: '/default-avatar.jpg'
   },
   email: {
     type: String,
@@ -26,9 +26,15 @@ const UserSchema = new Schema({
   dilemmas: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Dilemma"
+      ref: 'Dilemma'
+    }
+  ],
+  completed_dilemmas: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Dilemma'
     }
   ]
 });
 
-module.exports = User = mongoose.model("User", UserSchema, "users");
+module.exports = User = mongoose.model('User', UserSchema, 'users');

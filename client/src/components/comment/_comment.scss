@@ -1,0 +1,107 @@
+.comment-section {
+  display: grid;
+  grid-template-areas: 'comments comments comments aside aside';
+
+  .comments-wrapper {
+    grid-area: comments;
+
+    .comment-wrapper {
+      display: flex;
+      padding: 10px 10px 10px 0;
+
+      .comment {
+        flex-direction: column;
+
+        .author {
+          font-size: 0.6em;
+          font-weight: bold;
+        }
+
+        .date {
+          font-size: 0.45em;
+          font-weight: 200;
+          color: #999;
+        }
+
+        .text {
+          font-size: 0.5em;
+        }
+
+        .actions {
+          vertical-align: baseline;
+          flex-grow: 1;
+          height: 100%;
+        }
+
+        .reply,
+        .like {
+          color: red;
+          justify-self: baseline;
+        }
+      }
+      .votes {
+        width: 35px;
+        text-align: center;
+        font-size: 0.55em;
+        height: 100%;
+        line-height: 20px;
+      }
+
+      .profile-picture {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 0.4em;
+        border-style: solid;
+        border-color: #fff;
+        box-sizing: content-box;
+        width: 50px;
+        height: 65px;
+        overflow: hidden;
+        box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1) !important;
+        margin-right: 1em;
+
+        &.red-border {
+          background-color: red;
+          border-color: red;
+        }
+
+        &.blue-border {
+          background-color: blue;
+          border-color: blue;
+        }
+        img {
+          max-width: 44px;
+          border-radius: 0.25em;
+          margin-top: 3px;
+        }
+      }
+    }
+  }
+}
+
+ul {
+  list-style: none;
+}
+ul li {
+  margin-left: 1em;
+}
+
+ul li ul {
+  border-left: 1px solid #999;
+  position: relative;
+}
+
+ul li ul::before {
+  content: '';
+  border-bottom: 1px solid #999;
+  position: absolute;
+  width: 0.5em;
+  top: 2em;
+}
+
+aside {
+  grid-area: aside;
+  border-left: 1px solid #000;
+}

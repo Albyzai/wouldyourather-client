@@ -1,0 +1,70 @@
+/* Theming */
+@import '_variables.scss';
+
+/* Component Imports */
+@import '../components/dilemma/_dilemma.scss';
+@import '../components/auth/_auth.scss';
+@import '../components/comment/comment';
+@import '../components/layouts/partials/navigation/_navbar.scss';
+@import '../components/layouts/partials/footer/footer';
+//@import '../components/common/'
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+
+  body {
+    /* background: url("../img/bgpattern.png") repeat; */
+    font-family: 'Roboto', sans-serif !important;
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE10+/Edge */
+    user-select: none;
+    /* Standard */
+  }
+
+  .nopadding {
+    padding: 0 !important;
+  }
+
+  .nomargin {
+    margin: 0 !important;
+  }
+
+  .container {
+    width: 80%;
+    margin: auto;
+  }
+
+  .container-fluid {
+    width: 100%;
+  }
+
+  .App {
+    display: grid;
+    grid-template-areas:
+      'header'
+      'content'
+      'footer';
+
+    #header {
+      grid-area: header;
+    }
+
+    #content {
+      grid-area: content;
+    }
+
+    footer {
+      grid-area: footer;
+    }
+  }
+}

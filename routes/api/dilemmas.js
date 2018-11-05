@@ -7,7 +7,6 @@ const auth = passport.authenticate('jwt', { session: false });
 
 // Import Controllers
 const DilemmaController = require('../../controllers/dilemma.controller');
-const CommentController = require('../../controllers/comment.controller');
 
 // @route   GET api/dilemmas
 // @desc    Get a random Dilemma
@@ -44,32 +43,9 @@ router.post('/like/:id', auth, DilemmaController.like_dilemma);
 // @access  Private
 router.post('/unlike/:id', auth, DilemmaController.unlike_dilemma);
 
-// @route   POST api/dilemmas/comment/:id
-// @desc    Create a Comment on a Dilemma
-// @access  Private
-router.post('/comment/:id', auth, CommentController.comment_dilemma);
-
-// @route   POST api/dilemmas/comment/:commentid/:id
-// @desc    Create a reply to a comment
-// @access  Private
-router.post(
-  '/comment/:commentid/:id',
-  auth,
-  CommentController.reply_to_comment
-);
-
-// @route   POST api/dilemmas/comment/:id/:comment_id
-// @desc    Remove comment from dilemma
-// @access  Private
-router.delete(
-  '/comment/:id/:comment_id',
-  auth,
-  CommentController.delete_comment
-);
-
 // @route   POST api/dilemmas/:color/:id
 // @desc    Vote on the specified dilemma by :color
 // @access  Public
-router.post('/:color/:id', DilemmaController.vote_dilemma);
+router.post('/:color/:id', auth, DilemmaController.vote_dilemma);
 
 module.exports = router;

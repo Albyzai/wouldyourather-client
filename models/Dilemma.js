@@ -1,15 +1,15 @@
-const mongoose = require("mongoose");
-const slug = require("mongoose-slug-generator");
+const mongoose = require('mongoose');
+const slug = require('mongoose-slug-generator');
 const Schema = mongoose.Schema;
 
-const Comment = require("./Comment");
+const Comment = require('./Comment');
 mongoose.plugin(slug);
 
 // Create Schema
 const DilemmaSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: 'User'
   },
   title: {
     type: String
@@ -19,7 +19,7 @@ const DilemmaSchema = new Schema({
   },
   slug: {
     type: String,
-    slug: "title"
+    slug: 'title'
   },
   red: {
     type: String,
@@ -29,16 +29,20 @@ const DilemmaSchema = new Schema({
     type: String,
     required: true
   },
-  red_votes: {
-    type: Number,
-    default: 0,
-    required: true
-  },
-  blue_votes: {
-    type: Number,
-    default: 0,
-    required: true
-  },
+  red_votes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      default: []
+    }
+  ],
+  blue_votes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      default: []
+    }
+  ],
   likes: [
     {
       user: {
@@ -55,4 +59,4 @@ const DilemmaSchema = new Schema({
   }
 });
 
-module.exports = Dilemma = mongoose.model("Dilemma", DilemmaSchema, "dilemmas");
+module.exports = Dilemma = mongoose.model('Dilemma', DilemmaSchema, 'dilemmas');

@@ -1,27 +1,25 @@
 // React Imports
-import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Container } from "reactstrap";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import jwt_decode from "jwt-decode";
-import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./actions/authActions";
+import jwt_decode from 'jwt-decode';
+import setAuthToken from './utils/setAuthToken';
+import { setCurrentUser, logoutUser } from './actions/authActions';
 
 // Component Imports
-import AppNavbar from "./components/layout/AppNavbar";
-import Footer from "./components/layout/Footer";
-import Login from "./components/auth/Login";
-import Register from "./components/auth/Register";
-import DilemmaCreateForm from "./components/dilemma/DilemmaCreateForm";
+import AppNavbar from './components/layouts/partials/navigation/AppNavbar';
+import Footer from './components/layouts/partials/footer/Footer';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+import DilemmaCreateForm from './components/dilemma/DilemmaCreateForm';
+import FrontPageLayout from './components/layouts/frontpage/FrontPageLayout';
 
 // Redux Imports
-import { Provider } from "react-redux";
-import store from "./store";
+import { Provider } from 'react-redux';
+import store from './store';
 
 // CSS Imports
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
-import DilemmaLayout from "./components/layout/DilemmaLayout";
+import './css/main.css';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -43,7 +41,7 @@ if (localStorage.jwtToken) {
     // TODO: Clear current profile
 
     // Redirect to login
-    window.location.href = "/login";
+    window.location.href = '/login';
   }
 }
 
@@ -54,8 +52,8 @@ class App extends Component {
         <Router>
           <div className="App">
             <AppNavbar />
-            <Container fluid={true}>
-              <Route path="/" component={DilemmaLayout} exact />
+            <section id="content" className="container-fluid">
+              <Route path="/" component={FrontPageLayout} exact />
               <Route path="/login" component={Login} exact />
               <Route path="/register" component={Register} exact />
               <Route
@@ -63,7 +61,7 @@ class App extends Component {
                 component={DilemmaCreateForm}
                 exact
               />
-            </Container>
+            </section>
             <Footer />
           </div>
         </Router>

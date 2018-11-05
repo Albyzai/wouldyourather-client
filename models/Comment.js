@@ -1,21 +1,21 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const Dilemma = require('./Dilemma');
 // Create Schema
 const CommentSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true
   },
   dilemma: {
     type: Schema.Types.ObjectId,
-    ref: "Dilemma",
+    ref: 'Dilemma',
     required: true
   },
   author: {
     type: String,
-    default: "Slettet bruger",
+    default: 'Slettet bruger',
     required: true
   },
   commentpicture: {
@@ -28,11 +28,18 @@ const CommentSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
-  }
+  },
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      default: []
+    }
+  ]
 });
 
 CommentSchema.add({
   replies: [CommentSchema]
 });
 
-module.exports = Comment = mongoose.model("Comment", CommentSchema, "comments");
+module.exports = Comment = mongoose.model('Comment', CommentSchema, 'comments');
