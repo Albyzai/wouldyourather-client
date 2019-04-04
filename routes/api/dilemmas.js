@@ -7,21 +7,23 @@ const auth = passport.authenticate('jwt', { session: false });
 
 // Import Controllers
 const DilemmaController = require('../../controllers/dilemma.controller');
-
-// @route   GET api/dilemmas
-// @desc    Get a random Dilemma
+const DilemmaController2 = require('../../controllers/dilemma.controller.new');
+// @route   GET api/dilemmas/all
+// @desc    Get All Dilemmas
 // @access  Public
-router.get('/', DilemmaController.get_dilemma_random);
+router.get('/', DilemmaController2.getDilemmas);
+
+router.get('/:id/comments', DilemmaController2.getCommentsForDilemma);
+
+// // @route   GET api/dilemmas
+// // @desc    Get a random Dilemma
+// // @access  Public
+// router.get('/', DilemmaController.get_dilemma_random);
 
 // @route   POST api/dilemmas
 // @desc    Create A Dilemma
 // @access  Public
 router.post('/', auth, DilemmaController.create_dilemma);
-
-// @route   GET api/dilemmas/all
-// @desc    Get All Dilemmas
-// @access  Public
-router.get('/all', DilemmaController.get_dilemmas);
 
 // @route   GET api/dilemmas/:slug
 // @desc    Get a single dilemma with :slug
